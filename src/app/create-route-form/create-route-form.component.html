@@ -1,0 +1,90 @@
+<form class="create-route-form"
+      novalidate
+      [formGroup]="form"
+      (ngSubmit)="save($event)"
+      >
+  <!-- Title -->
+  <span class="create-route-form__title">Информация о маршруте</span>
+
+  <!-- Name -->
+  <input class="create-route-form__name-text"
+         type="text"
+         placeholder="Введите наименование"
+         id="prefix_name"
+         formControlName="name"
+         />
+  <label class="create-route-form__name-label"
+         for="prefix_name"
+         [class]="requiredClass()"
+         >Наименование</label>
+
+  <!-- Author -->
+  <input class="create-route-form__author-text"
+         type="text"
+         placeholder="Введите автора маршрута"
+         id="prefix_author"
+         formControlName="author"
+         />
+  <label class="create-route-form__author-label"
+         for="prefix_author"
+         [class]="requiredClass()"
+         >Автор маршрута</label>
+
+  <!-- PerformerType -->
+  <select class="create-route-form__performer-select"
+          id="prefix_performer"
+          formControlName="performerID"
+          >
+    <option value="-1"
+            selected
+            disabled
+            >Выберите тип исполнителя</option>
+    <option *ngFor="let type of performerTypes; let id = index"
+            [value]="id"
+            >{{ type }}</option>
+  </select>
+  <label class="create-route-form__performer-label"
+         for="prefix_performer"
+         [class]="requiredClass()"
+         >Тип исполнителя</label>
+
+  <!-- Days -->
+  <div class="create-route-form__days-list">
+    <div class="create-route-form__day"
+         *ngFor="let day of week; let id = index"
+         >
+      <input class="create-route-form__day-radio"
+             type="radio"
+             [id]="'prefix_radio-' + id"
+             formControlName="weekdayID"
+             [value]="id"
+             />
+      <label class="create-route-form__day-label"
+             [for]="'prefix_radio-' + id"
+             >{{ day }}</label>
+    </div>
+  </div>
+  <span class="create-route-form__days-span"
+        [class]="requiredClass()"
+        >Дни обходов</span>
+
+  <!-- LongRound -->
+  <div class="create-route-form__long-round">
+    <input class="create-route-form__long-round-checkbox"
+           type="checkbox"
+           id="prefix_long-round"
+           formControlName="longRound"
+           (change)="toggleValidation()"
+           />
+    <label class="create-route-form__long-round-label"
+           for="prefix_long-round"
+           >Длительный обход</label>
+  </div>
+
+  <!-- SaveButton -->
+  <button class="create-route-form__save-button"
+         type="submit"
+         appRipple
+         [disabled]="form.invalid"
+         >Сохранить</button>
+</form>
